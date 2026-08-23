@@ -1,0 +1,25 @@
+# uv / Python
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# macOS / editors
+.DS_Store
+.vscode/
+
+# Downloaded model weights and generated compiler artifacts
+models/**/*.pth
+models/**/*.pt
+artifacts/**/*.pt2
+artifacts/**/*.pt
+datasets/images/*
+artifacts/**/*.onnx
+artifacts/**/*.onnx.data
+artifacts/**/*.mlpackage/
+artifacts/**/*.mlmodelc/
+artifacts/**/*.mil
+artifacts/**/*.json
+
+# Machine-specific benchmark runs
+results/phase0_resnet50/*/
