@@ -1,0 +1,37 @@
+第37个notebook 代码块中报错：
+nning MIL default pipeline: 100%|██████████| 95/95 [00:01<00:00, 65.68 passes/s] 
+Running MIL backend_mlprogram pipeline: 100%|██████████| 12/12 [00:00<00:00, 327.61 passes/s]
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[38], line 40
+     33 coreml_fp32_conversion_ms, coreml_fp32_save_ms = convert_coreml_package(
+     34     ct.precision.FLOAT32, COREML_FP32_PACKAGE
+     35 )
+     36 coreml_fp16_conversion_ms, coreml_fp16_save_ms = convert_coreml_package(
+     37     ct.precision.FLOAT16, COREML_FP16_PACKAGE
+     38 )
+---> 40 coreml_fp16_new_conversion_ms ,coreml_fp16_new_save_ms = convert_coreml_package(
+     41     ct.precision.FLOAT16, COREML_FP16_NEW_PACKAGE, 
+     42     coreml_input_type=coreml_input_type_fp16_new, 
+     43     coreml_output_type=coreml_input_type_fp16_new
+     44 )
+     48 print(
+     49     f"FP32 conversion={coreml_fp32_conversion_ms:.2f} ms, save={coreml_fp32_save_ms:.2f} ms, "
+     50     f"package={size_mb(COREML_FP32_PACKAGE):.2f} MB\n"
+   (...)     54     f"package={size_mb(COREML_FP16_NEW_PACKAGE):.2f} MB\n"
+     55 )
+
+Cell In[38], line 16
+     14     shutil.rmtree(package_path)
+     15 start = time.perf_counter_ns()
+---> 16 mlmodel = ct.convert(
+     17     traced_model,
+...
+--> 774     raise ValueError(msg)
+    775 for out_ in outputs:
+    776     if isinstance(out_, TensorType):
+
+ValueError: The 'shape' argument must not be specified for the outputs, since it is automatically inferred from the input shapes and the ops in the model
+Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings...
+
+我现在是想把输入输出都转为默认fp16，从而优化掉cast操作。出现这个词报错为什么？
