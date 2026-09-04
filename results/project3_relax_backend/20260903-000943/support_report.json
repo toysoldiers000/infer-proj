@@ -1,0 +1,26 @@
+{
+  "supported_with_fallback": {
+    "structural_matches": 1,
+    "support_accepted": true,
+    "capability_accepted": true,
+    "reasons": [],
+    "working_set_bytes": 2048
+  },
+  "pattern_mismatch": {
+    "structural_matches": 0,
+    "support_accepted": false,
+    "capability_accepted": true,
+    "reasons": [],
+    "working_set_bytes": 2048
+  },
+  "support_rejected": {
+    "structural_matches": 1,
+    "support_accepted": false,
+    "capability_accepted": false,
+    "reasons": [
+      "K=12 is not aligned to 16",
+      "N=15 is not aligned to 16"
+    ],
+    "working_set_bytes": 1584
+  }
+}

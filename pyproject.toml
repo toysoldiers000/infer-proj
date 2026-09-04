@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Apple Silicon inference and AI compiler learning labs"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "apache-tvm==0.26.0",
     "coremltools==9.0",
     "ipykernel>=6.29",
     "jupyterlab>=4.3",

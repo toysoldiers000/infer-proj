@@ -1,0 +1,52 @@
+{
+  "run_id": "20260903-000943",
+  "notebook": "notebooks/project3_backend_autotuning/01_relax_pattern_partition_backend_contract.ipynb",
+  "git_commit": "c3c3053fcfa43aa545a79a0224bedcbc5f8384a5",
+  "git_dirty": true,
+  "python": "3.12.11",
+  "tvm": "0.26.0",
+  "tvm_git_commit": "unknown",
+  "target": "llvm",
+  "tvm_build_flags": {
+    "USE_LLVM": "ON",
+    "USE_METAL": "OFF"
+  },
+  "random_seed": 7,
+  "cpu_threads": 4,
+  "backend_name": "project3_toy_npu",
+  "pattern_name": "project3_toy_npu.matmul_bias_relu",
+  "toy_capability": {
+    "supported_dtypes": [
+      "float16",
+      "float32"
+    ],
+    "K_alignment_elements": 16,
+    "N_alignment_elements": 16,
+    "local_memory_budget_bytes": 65536
+  },
+  "case_specs": {
+    "supported_with_fallback": {
+      "M": 8,
+      "K": 16,
+      "N": 16,
+      "dtype": "float32",
+      "break_pattern": false
+    },
+    "pattern_mismatch": {
+      "M": 8,
+      "K": 16,
+      "N": 16,
+      "dtype": "float32",
+      "break_pattern": true
+    },
+    "support_rejected": {
+      "M": 8,
+      "K": 12,
+      "N": 15,
+      "dtype": "float32",
+      "break_pattern": false
+    }
+  },
+  "coverage_denominator": "original Relax primitive op node count",
+  "runtime_measurement_present": false
+}

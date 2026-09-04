@@ -23,3 +23,4 @@ artifacts/**/*.json
 
 # Machine-specific benchmark runs
 results/phase0_resnet50/*/
+results/project2_quantization/*/

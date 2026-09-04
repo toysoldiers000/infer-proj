@@ -1,0 +1,7 @@
+{
+  "numpy_vs_original_max_abs_error": 5.960464477539063e-08,
+  "original_vs_grouped_max_abs_error": 0.0,
+  "all_element_parity_passed": true,
+  "wrong_golden_negative_control_caught": true,
+  "execution_backend": "TVM LLVM CPU for both modules"
+}

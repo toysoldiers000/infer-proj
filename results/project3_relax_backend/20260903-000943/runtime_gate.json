@@ -1,0 +1,9 @@
+{
+  "custom codegen FFI key": "relax.ext.project3_toy_npu",
+  "custom codegen available": false,
+  "RunCodegen gate": "expected failure caught: missing custom codegen",
+  "error summary": "Check failed: (codegen.has_value()) is false: Codegen is not found: relax.ext.project3_toy_npu",
+  "official example NPU codegen built": false,
+  "official example NPU runtime built": false,
+  "runtime device execution proven": false
+}

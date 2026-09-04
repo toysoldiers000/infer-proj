@@ -1,0 +1,38 @@
+{
+  "supported_with_fallback": {
+    "candidate_primitive_ops": 4,
+    "structural_matches": 1,
+    "accepted_subgraphs": 1,
+    "planned_offloaded_ops": 3,
+    "fallback_ops": 1,
+    "node_coverage": 0.75,
+    "fallback_ratio": 0.25,
+    "composite_count": 1,
+    "subgraph_count": 1,
+    "backend_call_boundaries": 1
+  },
+  "pattern_mismatch": {
+    "candidate_primitive_ops": 5,
+    "structural_matches": 0,
+    "accepted_subgraphs": 0,
+    "planned_offloaded_ops": 0,
+    "fallback_ops": 5,
+    "node_coverage": 0.0,
+    "fallback_ratio": 1.0,
+    "composite_count": 0,
+    "subgraph_count": 0,
+    "backend_call_boundaries": 0
+  },
+  "support_rejected": {
+    "candidate_primitive_ops": 4,
+    "structural_matches": 1,
+    "accepted_subgraphs": 0,
+    "planned_offloaded_ops": 0,
+    "fallback_ops": 4,
+    "node_coverage": 0.0,
+    "fallback_ratio": 1.0,
+    "composite_count": 0,
+    "subgraph_count": 0,
+    "backend_call_boundaries": 0
+  }
+}
