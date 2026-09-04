@@ -33,8 +33,11 @@
 | `docs/N93X-AllSpark-LLM-Ecosystem-Research-Report.md` | 公司 SoC 实测调研报告。**顶部自带声明：由 Claude 生成，部分数据可能存在错误** | N93X 架构事实 / 生态盘点 / 实测带宽·算力·LLM 数据的**唯一来源**。引用必须带 `【实测】`/`【官方 schema】`/`【推断】` 标签 + 章节号（§x.x），不得提升其可信度 |
 | `docs/Detailed‑Answers‑for‑Edge‑AI‑Deployment.md` | 端侧部署面试题详答（含 NX9031 专章） | 端侧部署流程 / 量化 / 算子 / 性能排查的**面试口径标准答案**，以及「证据强度分级」。我回答这类问题时默认按此口径 |
 |`docs/N93X-AllSpark-LLM-Ecosystem-Research-Report.md`|Connext和DYT在NX9031上的实验过程以及相应信息调查。|当涉及到公司NPU需要执行来获取相应信息的时候，可以参考该文档。以及当涉及到CoreML、M1、高通等芯片以及相应软件工具链的通用底层原理的说明的时候，可以结合该文档描述，通过已知信息去推导出相应的信息，或者可以提及到该文档中的内容。|
+| `docs/Alchemy-Hauk-Attention-Source-Investigation.md` | AllSpark 编译栈源码级调查报告，以 Attention 为主线，从 Python `forward` 追踪到 NPU kernel。覆盖 Alchemy（native ANetwork 建图前端）、Hauk（扩展 atvm.tir 的 kernel IR/DSL）、ACE 算子模板（GEMM/Conv/Softmax/RoPE/sparse cross attention）、AOPI 算子契约 JSON，以及与 TVM Relax/TIR、MLIR、QNN、CoreML 的概念校准 | 讲 AllSpark 编译栈内部机制（Alchemy 建图与 Builder、Hauk kernel IR 与 pass 列表、算子模板与 tile 参数、图 fusion 与 kernel fusion 的区别）时的**源码证据唯一来源**。自带 `[S]`源码可见 / `[D]`docstring / `[M]`AOPI JSON / `[I]`推断 四级证据标记，引用时不得升级可信度。讲编译器通用架构（图IR vs kernelIR 分层、layout contract、dynamic shape profile、target legality）时可用于概念校准 |
+| `docs/ConvNeXt-DyT-NX9031-Guide&Info .md` | ConvNeXt / DyT 模型在 NX9031 上的 mode-12 细粒度调度采集操作指南（较早版本，1771 行）。涵盖 nxPerf profiling mode 位定义（mode-0/12/15）、证据能力矩阵、从编译到板端 trace 解析的完整流程、core placement 与 kernel 时间线分析 | 讲 N93X profiling 方法论（mode-12 软件 timer 能测什么/不能测什么、mode-15 硬件 Grid 的适用边界、instrumentation 开销不能写成产品 E2E latency）时的**标准操作手册**。ConvNeXt/DyT 实验复现、trace 字段读法（Monitor/Record/RelationID）、DDR 带宽窗口聚合的参考流程 |
+| `docs/mode-12 细粒度调度采集指南_副本.md` | 同上主题的更完整版本（1956 行），在较早版本基础上额外包含 §16.14.1「DyT 的 Tanh、baseline LN 与 layout：完整证据链和正确结论」，详细展示了从源 ONNX → ACE lowering → OpFusion → final graph → 板端 Record JOIN Monitor 的四层验证方法论，以及 `apex_fused_op` / `fuse_group_id` / `fuse_root_flag` 等融合字段的精确读法 | 与上一份互补，**内容更新更全**。讲 OpFusion 证据链（如何证明一个算子真的被融合、被哪个 core 执行、fusion group 内部节点关系）时优先参考此版本。`Tanh` 并入 `apex_fused_op` 后无法从 trace 拆出单独耗时——这是「融合后不能再做单算子归因」的典型案例 |
 
-两份文档共享一套方法论，默认继承到我们所有实验：**性能数字必须绑定配置档位；结论必须可证伪；「编译成功」不构成任何正确性或性能证据。**
+以上文档共享一套方法论，默认继承到我们所有实验：**性能数字必须绑定配置档位；结论必须可证伪；「编译成功」不构成任何正确性或性能证据。**
 
 # 硬件平台档案：N93X / NX9031 AllSpark NPU（读 `docs/` 后的共识基线）
 
