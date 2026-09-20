@@ -8,6 +8,9 @@ __pycache__/
 .DS_Store
 .vscode/
 
+# Personal documents (never publish)
+resume/
+
 # Downloaded model weights and generated compiler artifacts
 models/**/*.pth
 models/**/*.pt
