@@ -1,0 +1,6 @@
+case,caught,evidence
+codegen_reject,True,TOY_CODEGEN_REJECT
+kernel_unavailable,True,TOY_KERNEL_UNAVAILABLE
+workspace,True,TOY_WORKSPACE_EXHAUSTED
+corrupt_output,True,Not equal
+wrong_golden,True,Not equal

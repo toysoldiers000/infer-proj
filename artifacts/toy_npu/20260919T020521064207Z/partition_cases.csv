@@ -1,0 +1,11 @@
+case,structural_regions,accepted_regions,reason,runtime_calls,parity
+baseline,1,1,accepted,1,True
+fp32,1,0,dtype: FP16 only,0,True
+K1024,1,1,accepted,1,True
+K1000,1,0,alignment: K % 32,0,True
+N15,1,0,alignment: N % 16,0,True
+dynamic_K,1,0,shape: static only,0,True
+swapped_add,1,1,accepted,1,True
+reshape_gap,0,0,pattern: no candidate,0,True
+cast_gap,0,0,pattern: no candidate,0,True
+escaping_matmul,1,0,boundary: intermediate escapes,0,True

@@ -7,7 +7,114 @@
 环境处理：优先使用uv处理python虚拟环境。
 
 # 当前状态
-现在我的Project 1 已经完成，正在执行Project 3 的学习：`notebooks/project3_backend_autotuning/01_relax_pattern_partition_backend_contract.ipynb`。
+我已完成 3 个 Project 的所有学习内容，但又产生了新的学习方向,当前正在学`notebooks/swin_transformer/01_stage1_trustworthy_baseline.ipynb`, 新的基于 Swin Transformer 的学习和实践指导思想文档在 `docs/swin-transformer-guideline.md`:
+背景是这样的：我现在想跳槽到 AI 端侧部署和 AI 编译器这两个岗位，任选其一。现在我最缺的是工程经验，也就是没有从实际模型到落地的经验。这就造成我实际面对面试官的时候，对方可能会质疑项目的真实性，并提出一些只有实践过才了解的坑和经验。我和 AI，也就是和你对话的过程中，虽然能很快学习到一些概念性、原理性的知识，但真到了一个需求，或者出现一个问题的时候，还是没有实际经验指导我怎么解决。所以我觉得，实践经验，或者说对一个需求真实落地的经验，以及落地过程中遇到的大量工程上的正确性和性能问题，这些东西对实际面试官或者一个工作团队来讲是最重要的。
+
+## 需求拆解和约束管理实践经验
+工业经验不仅是 debugging，还包括需求拆解和约束管理。
+更可能是：模型必须在设备 X 上跑到 30 FPS；精度最多下降 1%；内存不能超过 1.5 GB；不能修改某个 runtime；工具链版本被冻结；两周内交付。
+
+然后我才要判断：
+该改模型？
+该改 compiler？
+该换 layout？
+该量化？
+该写 kernel？
+该接受 fallback？
+这叫 engineering judgment。所以我希望在任何一个新项目，或者我提问已有项目时，可以先考虑这一点做 performance attribution，再决定优化什么。
+
+## trade-off 经验
+
+学生项目通常在找哪个模型更快
+工业项目通常在找在多个约束下更合适
+例如：
+> FP16:
+> accuracy 80%
+> latency 20 ms
+
+> INT8:
+> accuracy 78%
+> latency 14 ms
+
+听起来 INT8 很好。
+但实际可能：
+- 量化 calibration pipeline 很复杂
+- 某些 shape fallback
+- 模型升级后精度经常 regression
+- debug 成本高
+
+最后团队可能选择 FP16。
+又比如 fusion：
+kernel 数减少 8 → 3,但 fused kernel workspace 增大 100 MB。在桌面 GPU 没问题，在端侧可能不能接受。真正的工程经验经常表现为：
+> 我知道这个优化为什么没有采用。
+
+这类故事非常能体现成熟度。因此，在我提问或者进行实践的时候，需要考虑我的实践经验：如果放在简历项目或者团队项目中，应该如何成熟地表达。
+
+## correctness pipeline
+正确性不是最后跑个 cosine similarity 就结束。
+一个成熟的 correctness pipeline 往往需要区分：
+```txt
+PyTorch baseline
+→ ONNX
+→ compiler IR
+→ device runtime
+```
+究竟从哪一步开始偏。
+而且可能是：
+> 绝对误差正常
+> 但 Top1 变化
+
+或者
+```txt
+整体 cosine 很高
+但某些 rare input 出现 NaN
+```
+
+所以真正工程经验包括：
+怎么选择 metric？
+
+intermediate tensor 怎么对齐？
+
+dynamic shape 怎么覆盖？
+
+FP16 数值误差和真正的 implementation bug 怎么区分？
+
+quantization error 和 backend correctness bug 怎么区分？
+
+这些东西非常值得专门训练。
+
+## 实验可信度
+目前我的简历里已经有 P50、重复测量、负控，这个方向是对的。
+真正工业性能分析不会只说：
+优化了 40%
+而必须能回答：
+```txt
+和谁比？
+
+warmup 几次？
+
+测多少次？
+
+P50 还是 mean？
+
+频率是否稳定？
+
+thermal 是否影响？
+
+编译是否包含？
+
+model load 是否包含？
+
+两次实验 artifact 是否一致？
+
+后台负载是否一致？
+```
+
+因为性能领域最容易出现：
+
+> 数字是真的，但结论是假的。
+
+一个会主动怀疑 measurement methodology 的候选人，可信度通常明显更高。
 
 # 我的背景（请当作讲解支点，不要从零补基础）
 
@@ -36,8 +143,8 @@
 | `docs/Alchemy-Hauk-Attention-Source-Investigation.md` | AllSpark 编译栈源码级调查报告，以 Attention 为主线，从 Python `forward` 追踪到 NPU kernel。覆盖 Alchemy（native ANetwork 建图前端）、Hauk（扩展 atvm.tir 的 kernel IR/DSL）、ACE 算子模板（GEMM/Conv/Softmax/RoPE/sparse cross attention）、AOPI 算子契约 JSON，以及与 TVM Relax/TIR、MLIR、QNN、CoreML 的概念校准 | 讲 AllSpark 编译栈内部机制（Alchemy 建图与 Builder、Hauk kernel IR 与 pass 列表、算子模板与 tile 参数、图 fusion 与 kernel fusion 的区别）时的**源码证据唯一来源**。自带 `[S]`源码可见 / `[D]`docstring / `[M]`AOPI JSON / `[I]`推断 四级证据标记，引用时不得升级可信度。讲编译器通用架构（图IR vs kernelIR 分层、layout contract、dynamic shape profile、target legality）时可用于概念校准 |
 | `docs/ConvNeXt-DyT-NX9031-Guide&Info .md` | ConvNeXt / DyT 模型在 NX9031 上的 mode-12 细粒度调度采集操作指南（较早版本，1771 行）。涵盖 nxPerf profiling mode 位定义（mode-0/12/15）、证据能力矩阵、从编译到板端 trace 解析的完整流程、core placement 与 kernel 时间线分析 | 讲 N93X profiling 方法论（mode-12 软件 timer 能测什么/不能测什么、mode-15 硬件 Grid 的适用边界、instrumentation 开销不能写成产品 E2E latency）时的**标准操作手册**。ConvNeXt/DyT 实验复现、trace 字段读法（Monitor/Record/RelationID）、DDR 带宽窗口聚合的参考流程 |
 | `docs/mode-12 细粒度调度采集指南_副本.md` | 同上主题的更完整版本（1956 行），在较早版本基础上额外包含 §16.14.1「DyT 的 Tanh、baseline LN 与 layout：完整证据链和正确结论」，详细展示了从源 ONNX → ACE lowering → OpFusion → final graph → 板端 Record JOIN Monitor 的四层验证方法论，以及 `apex_fused_op` / `fuse_group_id` / `fuse_root_flag` 等融合字段的精确读法 | 与上一份互补，**内容更新更全**。讲 OpFusion 证据链（如何证明一个算子真的被融合、被哪个 core 执行、fusion group 内部节点关系）时优先参考此版本。`Tanh` 并入 `apex_fused_op` 后无法从 trace 拆出单独耗时——这是「融合后不能再做单算子归因」的典型案例 |
+|`docs/swin-transformer-guideline.md`|我对自己当前项目实践经验缺失的思考，以及下一步针对 Swin Transformer 的项目规划和各阶段目标。|任何与 Swin Transformer 相关的内容，以及与 AI 编译器、AI 端侧模型部署领域相关的内容，都需要参考该文档。以 Swin Transformer 为例，如果涉及其他模型的实践，也参考 Swin Transformer 的路线和指导思想。该文档中的内容是我与 AI 对话探索生成的，所以文中一些地方只称“我”和“你”。你要清楚，这是 AI 生成的，所以文档中说的“你”就是我，也就是用户人类。|
 
-以上文档共享一套方法论，默认继承到我们所有实验：**性能数字必须绑定配置档位；结论必须可证伪；「编译成功」不构成任何正确性或性能证据。**
 
 # 硬件平台档案：N93X / NX9031 AllSpark NPU（读 `docs/` 后的共识基线）
 

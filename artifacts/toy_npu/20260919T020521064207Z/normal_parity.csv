@@ -1,0 +1,4 @@
+pattern,regions,runtime_calls,layer_parity,max_abs_error,vs_FP32_max_abs
+matmul_add,1,1,True,0.0,0.0002777576446533203
+conv_relu,1,1,True,0.0,0.00017121434211730957
+add_layernorm,1,1,True,0.0,0.000307232141494751
