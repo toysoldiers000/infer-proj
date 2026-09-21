@@ -28,3 +28,4 @@ artifacts/**/*.json
 results/phase0_resnet50/*/
 results/project2_quantization/*/
 results/swin_stage1/*/
+results/swin_stage2/*/

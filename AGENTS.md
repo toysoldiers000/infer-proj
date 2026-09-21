@@ -7,7 +7,7 @@
 环境处理：优先使用uv处理python虚拟环境。
 
 # 当前状态
-我已完成 3 个 Project 的所有学习内容，但又产生了新的学习方向,当前正在学`notebooks/swin_transformer/01_stage1_trustworthy_baseline.ipynb`, 新的基于 Swin Transformer 的学习和实践指导思想文档在 `docs/swin-transformer-guideline.md`:
+我已完成 3 个 Project 的所有学习内容，但又产生了新的学习方向,当前正在学`notebooks/swin_transformer/02_stage2_conversion_correctness.ipynb`, 新的基于 Swin Transformer 的学习和实践指导思想文档在 `docs/swin-transformer-guideline.md`:
 背景是这样的：我现在想跳槽到 AI 端侧部署和 AI 编译器这两个岗位，任选其一。现在我最缺的是工程经验，也就是没有从实际模型到落地的经验。这就造成我实际面对面试官的时候，对方可能会质疑项目的真实性，并提出一些只有实践过才了解的坑和经验。我和 AI，也就是和你对话的过程中，虽然能很快学习到一些概念性、原理性的知识，但真到了一个需求，或者出现一个问题的时候，还是没有实际经验指导我怎么解决。所以我觉得，实践经验，或者说对一个需求真实落地的经验，以及落地过程中遇到的大量工程上的正确性和性能问题，这些东西对实际面试官或者一个工作团队来讲是最重要的。
 
 ## 需求拆解和约束管理实践经验
